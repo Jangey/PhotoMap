@@ -28,6 +28,9 @@
                                 <rect key="frame" x="155.5" y="543" width="64" height="64"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="camera"/>
+                                <connections>
+                                    <action selector="didTapCamera:" destination="ghP-Ww-KKQ" eventType="touchUpInside" id="f3n-NZ-Je2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
