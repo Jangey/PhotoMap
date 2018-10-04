@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate, MKMapViewDelegate {
     
     
     @IBOutlet weak var cameraButton: UIButton!
@@ -29,6 +29,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
             let sfRegion = MKCoordinateRegionMake(CLLocationCoordinate2DMake(37.783333, -122.416667),
                                                   MKCoordinateSpanMake(0.1, 0.1))
             mapView.setRegion(sfRegion, animated: false)
+            mapView.delegate = self
         }
     }
     
@@ -70,16 +71,34 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
     
     func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
         let locationCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-        let annotation = MKPointAnnotation()
+        //let annotation = MKPointAnnotation()
+        let annotation = PhotoAnnotation()
         annotation.coordinate = locationCoordinate
         //annotation.title = "Picture!"
         mapView.addAnnotation(annotation)
         self.navigationController?.popToViewController(self, animated: true)
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseID = "myAnnotationView"
         
+        // User sees a custom annotation
+        let resizeRenderImageView = UIImageView(frame: CGRect(x:0, y:0, width:45, height:45))
+        
+        resizeRenderImageView.layer.borderColor = UIColor.white.cgColor
+        resizeRenderImageView.layer.borderWidth = 3.0
+        resizeRenderImageView.contentMode = UIViewContentMode.scaleAspectFill
+        resizeRenderImageView.image = (annotation as? PhotoAnnotation)?.photo
+        
+        // set postImage to resize
+        resizeRenderImageView.image = postImage
+        
+        UIGraphicsBeginImageContext(resizeRenderImageView.frame.size)
+        resizeRenderImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let thumbnail = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // User can drop a pin with image annotation
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
         if (annotationView == nil) {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
@@ -88,7 +107,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         }
         
         let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
-        imageView.image = UIImage(named: "camera")
+        //imageView.image = UIImage(named: "camera")
+        imageView.image = thumbnail
         
         return annotationView
     }
