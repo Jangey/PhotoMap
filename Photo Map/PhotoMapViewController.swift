@@ -83,7 +83,7 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         let reuseID = "myAnnotationView"
         
         // User sees a custom annotation
-        let resizeRenderImageView = UIImageView(frame: CGRect(x:0, y:0, width:45, height:45))
+        let resizeRenderImageView = UIImageView(frame: CGRect(x:0, y:0, width:30, height:30))
         
         resizeRenderImageView.layer.borderColor = UIColor.white.cgColor
         resizeRenderImageView.layer.borderWidth = 3.0
@@ -101,11 +101,16 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         // User can drop a pin with image annotation
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
         if (annotationView == nil) {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            //set the Pin to Image
+            //annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID) // set it as Pin view
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pin") // set as image Pin view
+            
             annotationView!.canShowCallout = true
             annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 50, height:50))
             // add a buuton on the right, Tapping on an annotation's callout should push a view controller showing the full-size image.
             annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
+            //use Image for thumbnail
+            annotationView!.image = thumbnail
         }
         
         let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
