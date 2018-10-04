@@ -66,9 +66,23 @@
                     <view key="view" contentMode="scaleToFill" id="IER-PT-2nq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IJI-nk-elt">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="N8d-FM-OAP" firstAttribute="top" secondItem="IJI-nk-elt" secondAttribute="bottom" id="JJH-df-323"/>
+                            <constraint firstItem="IJI-nk-elt" firstAttribute="leading" secondItem="IER-PT-2nq" secondAttribute="leading" id="TxT-c0-DZX"/>
+                            <constraint firstAttribute="trailing" secondItem="IJI-nk-elt" secondAttribute="trailing" id="Uf8-bt-0Uj"/>
+                            <constraint firstItem="IJI-nk-elt" firstAttribute="top" secondItem="FF8-mr-LhG" secondAttribute="bottom" id="eCc-OI-31a"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HUo-VF-R6y"/>
+                    <connections>
+                        <outlet property="fullImage" destination="IJI-nk-elt" id="lhu-uD-1h7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QRl-fe-rlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

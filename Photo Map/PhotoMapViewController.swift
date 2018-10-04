@@ -104,6 +104,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
             annotationView!.canShowCallout = true
             annotationView!.leftCalloutAccessoryView = UIImageView(frame: CGRect(x:0, y:0, width: 50, height:50))
+            // add a buuton on the right, Tapping on an annotation's callout should push a view controller showing the full-size image.
+            annotationView!.rightCalloutAccessoryView = UIButton(type: UIButtonType.detailDisclosure)
         }
         
         let imageView = annotationView?.leftCalloutAccessoryView as! UIImageView
@@ -113,6 +115,10 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         return annotationView
     }
     
+    // When tapping on annotation
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        performSegue(withIdentifier: "fullImageSegue", sender: nil)
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -122,6 +128,11 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         if segue.identifier == "tagSegue" {
             let vc: LocationsViewController = segue.destination as! LocationsViewController
             vc.delegate = self
+        }
+        
+        if segue.identifier == "fullImageSegue" {
+            let vc: FullImageViewController = segue.destination as! FullImageViewController
+            vc.postImage = postImage
         }
     }
     
