@@ -18,6 +18,9 @@ class FullImageViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         fullImage.image = postImage
+        
+        // set up navigation title name
+        navigationItem.title = "Full Image View"
     }
 
     override func didReceiveMemoryWarning() {

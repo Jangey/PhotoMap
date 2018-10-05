@@ -21,6 +21,8 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
 
         // Do any additional setup after loading the view.
         
+        // set up navigation title name
+        navigationItem.title = "Photo Map"
     }
 
     @IBOutlet weak var mapView: MKMapView! {
